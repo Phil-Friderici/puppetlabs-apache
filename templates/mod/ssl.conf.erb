@@ -13,7 +13,7 @@
 <% if @ssl_compression -%>
   SSLCompression On
 <% end -%>
-  <%- if scope.function_versioncmp([@apache_version, '2.4']) >= 0 -%>
+  <%- if scope.function_versioncmp([@apache_version_integer, '2.4']) >= 0 -%>
   Mutex <%= @ssl_mutex %>
   <%- else -%>
   SSLMutex <%= @ssl_mutex %>

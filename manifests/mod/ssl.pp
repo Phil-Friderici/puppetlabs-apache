@@ -19,9 +19,11 @@ class apache::mod::ssl (
     'gentoo'  => '/var/run/ssl_scache(512000)',
   }
 
+  $apache_version_integer = $apache_version + 0
+
   case $::osfamily {
     'debian': {
-      if versioncmp($apache_version, '2.4') >= 0 {
+      if versioncmp($apache_version_integer, '2.4') >= 0 {
         $ssl_mutex = 'default'
       } elsif $::operatingsystem == 'Ubuntu' and $::operatingsystemrelease == '10.04' {
         $ssl_mutex = 'file:/var/run/apache2/ssl_mutex'
@@ -47,7 +49,7 @@ class apache::mod::ssl (
     package => $package_name,
   }
 
-  if versioncmp($apache_version, '2.4') >= 0 {
+  if versioncmp($apache_version_integer, '2.4') >= 0 {
     ::apache::mod { 'socache_shmcb': }
   }
 
@@ -63,7 +65,7 @@ class apache::mod::ssl (
   # $ssl_mutex
   # $ssl_random_seed_bytes
   # $ssl_sessioncachetimeout
-  # $apache_version
+  # $apache_version_integer
   #
   file { 'ssl.conf':
     ensure  => file,
